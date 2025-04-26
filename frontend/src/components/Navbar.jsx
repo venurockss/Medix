@@ -10,10 +10,10 @@ const Navbar = () => {
     const { token, setToken } = useContext(AppContext);
 
 
-    const logout = () =>{
-        setToken('false')
-        localStorage.removeItem('token')
-    }
+    const logout = () => {
+        setToken(null);
+        localStorage.removeItem('token');
+      };
 
     return (
         <div className='flex item-center justify-between text-sm py-4 md-5 border-b border-b-gray-400'>

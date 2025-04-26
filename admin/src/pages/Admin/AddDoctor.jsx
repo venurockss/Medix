@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const AddDoctor = () => {
-  // const [docImg, setDocImg] = useState(false);
+  const [docImg, setDocImg] = useState(null); // Store the selected file
   const [docName, setDocName] = useState('');
   const [docEmail, setDocEmail] = useState('');
   const [docPassword, setDocPassword] = useState('');
@@ -17,65 +17,55 @@ const AddDoctor = () => {
   const [docAddress2, setDocAddress2] = useState('');
   const [docAbout, setDocAbout] = useState('');
 
-  const {backendUrl,aToken}= useContext(AdminContext);
+  const { backendUrl, aToken } = useContext(AdminContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      //  if(!docImg) {
-      //   return toast.error("Please upload a doctor image");
-      //  }
-       console.log(docImg);
-       const formData = new FormData();
-        // formData.append('image', docImg);
-        formData.append('name', docName);
-        formData.append('email', docEmail);
-        formData.append('password', docPassword);
-        formData.append('experience', docExperience);
-        formData.append('fee', Number(docFees));
-        formData.append('speciality', docSpeciality);
-        formData.append('degree', docEducation);
-        formData.append('address',JSON.stringify( {line1: docAddress1, line2: docAddress2}));
-        formData.append('about', docAbout);
 
+    if (!docImg) {
+      return toast.error("Please upload a doctor image"); // Ensure image is uploaded
+    }
 
-      
+    try {
+      const formData = new FormData();
+      formData.append('image', docImg); // Append the image file
+      formData.append('name', docName);
+      formData.append('email', docEmail);
+      formData.append('password', docPassword);
+      formData.append('experience', docExperience);
+      formData.append('fee', Number(docFees));
+      formData.append('speciality', docSpeciality);
+      formData.append('degree', docEducation);
+      formData.append('address', JSON.stringify({ line1: docAddress1, line2: docAddress2 })); // Properly stringify the address object
+      formData.append('about', docAbout);
 
-        const { data } = await axios.post(`${backendUrl}/api/admin/addDoctor`, formData, {
-          headers: {
-            Authorization: `Bearer ${aToken}`
-          }
-        });
-        for (let key of formData.keys()) {  
-          console.log(key, formData.get(key));
+      const { data } = await axios.post(`${backendUrl}/api/admin/addDoctor`, formData, {
+        headers: {
+          atoken: aToken // Use 'atoken' header instead of 'Authorization'
         }
+      });
 
-      
-      if(data.status === true){
+      if (data.status === true) {
         toast.success(data.message);
-        // setDocImg(false);
         setDocName('');
         setDocEmail('');
         setDocPassword('');
-        setDocExperience("1 Year");
+        setDocExperience(1);
         setDocFees('');
         setDocSpeciality('General physician');
         setDocEducation('');
         setDocAddress1('');
         setDocAddress2('');
         setDocAbout('');
-      }else if(data.status === "error"){
+        setDocImg(null); // Reset image state after successful form submission
+      } else if (data.status === 'error') {
         toast.error(data.message);
       }
-
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong while adding the doctor.");
     }
-    catch(err){
-
-    }
-
-
-
-  }
+  };
 
   return (
     <div className="p-8 max-w-3xl mx-auto">
@@ -86,12 +76,12 @@ const AddDoctor = () => {
         <div className="flex flex-col items-center justify-center gap-2">
           <label htmlFor="doc-img" className="cursor-pointer">
             <img
-              src={  docImg ? URL.createObjectURL(docImg) : assets.upload_area} 
+              src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
               alt="Upload"
               className="w-28 h-28 object-contain"
             />
           </label>
-          <input onChange={(e)=> setDocImg(e.target.files[0])} type="file" id="doc-img" hidden />
+          <input onChange={(e) => setDocImg(e.target.files[0])} type="file" id="doc-img" hidden />
           <p className="text-sm text-gray-500">Upload Doctor's Picture</p>
         </div>
 
@@ -143,7 +133,7 @@ const AddDoctor = () => {
 
           <div>
             <label className="block text-sm font-medium mb-1">Fees (in ₹)</label>
-            <input  onChange={(e) => setDocFees(e.target.value)}
+            <input onChange={(e) => setDocFees(e.target.value)}
               value={docFees}
               type="number"
               placeholder="e.g. 1000"
@@ -165,7 +155,7 @@ const AddDoctor = () => {
 
           <div>
             <label className="block text-sm font-medium mb-1">Education</label>
-            <input  onChange={(e) => setDocEducation(e.target.value)}
+            <input onChange={(e) => setDocEducation(e.target.value)}
               value={docEducation}
               type="text"
               placeholder="e.g. MBBS, MD"
@@ -176,7 +166,7 @@ const AddDoctor = () => {
 
           <div>
             <label className="block text-sm font-medium mb-1">Address Line 1</label>
-            <input  onChange={(e) => setDocAddress1(e.target.value)}
+            <input onChange={(e) => setDocAddress1(e.target.value)}
               value={docAddress1}
               type="text"
               placeholder="e.g. Street, Area"
@@ -187,7 +177,7 @@ const AddDoctor = () => {
 
           <div>
             <label className="block text-sm font-medium mb-1">Address Line 2</label>
-            <input  onChange={(e) => setDocAddress2(e.target.value)}
+            <input onChange={(e) => setDocAddress2(e.target.value)}
               value={docAddress2}
               type="text"
               placeholder="e.g. City, Pincode"

@@ -1,34 +1,45 @@
-import React, { useState } from 'react';
-import { assets } from '../assets/assets';
+import React, { useContext, useState, useEffect } from 'react';
+import { AppContext } from '../context/Appcontext';
+import { toast } from 'react-toastify';
 
 const MyProfile = () => {
-  const [userData, setUserData] = useState({
-    name: 'Venu',
-    Image: assets.profile_pic,
-    email: 'venu@gmail.com',
-    phone: '6846416168',
-    address: {
-      line1: 'Sri Nagar',
-      line2: 'Sangareddy',
-    },
-    gender: 'Male',
-    dob: '2006-07-01',
-  });
-
+  const { userData, setUserData } = useContext(AppContext);
   const [isEdit, setIsEdit] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  
 
-  const handleAddressChange = (key, value) => {
+  useEffect(() => {
+    if (userData && Object.keys(userData).length > 0) {
+      setIsLoading(false);
+    }
+  }, [userData]);
+
+  
+
+  console.log('Rendering MyProfile component with userData:', userData);
+  if(isLoading){
+    return <p className="text-center mt-10 text-gray-500">user Loading profile...</p>;
+  }
+  const handleAddressChange = (field, value) => {
     setUserData(prev => ({
       ...prev,
-      address: { ...prev.address, [key]: value },
+      address: {
+        ...prev.address,
+        [field]: value,
+      },
     }));
   };
+
+  if (!userData || !userData.name) {
+    return <p className="text-center mt-10 text-gray-500">Loading profile...</p>;
+  }
+  
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
       <div className="flex flex-col items-center mb-6">
         <img
-          src={userData.Image}
+          src={userData.image || ''}
           alt="Profile"
           className="w-32 h-32 rounded-full mb-4 border-2 border-gray-300"
         />
@@ -74,7 +85,7 @@ const MyProfile = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-600">Line 1:</label>
                 <input
-                  value={userData.address.line1}
+                  value={userData.address?.line1 || ''}
                   onChange={e => handleAddressChange('line1', e.target.value)}
                   type="text"
                   className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -83,7 +94,7 @@ const MyProfile = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-600">Line 2:</label>
                 <input
-                  value={userData.address.line2}
+                  value={userData.address?.line2 || ''}
                   onChange={e => handleAddressChange('line2', e.target.value)}
                   type="text"
                   className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -92,8 +103,8 @@ const MyProfile = () => {
             </div>
           ) : (
             <div>
-              <p className="text-gray-700">{userData.address.line1}</p>
-              <p className="text-gray-700">{userData.address.line2}</p>
+              <p className="text-gray-700">{userData.address?.line1}</p>
+              <p className="text-gray-700">{userData.address?.line2}</p>
             </div>
           )}
         </div>
@@ -111,8 +122,8 @@ const MyProfile = () => {
               onChange={e => setUserData(prev => ({ ...prev, gender: e.target.value }))}
               className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
           ) : (
             <p className="text-gray-700">{userData.gender}</p>

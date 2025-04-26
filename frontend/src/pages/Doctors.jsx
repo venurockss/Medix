@@ -6,22 +6,22 @@ import { AppContext } from '../context/Appcontext';
 const Doctors = () => {
 
   const {speciality} = useParams();
-  const {doctors} = useContext(AppContext);
+  const {doctorsList} = useContext(AppContext);
   const [filterDoc,setFilterDoc] = useState([]);
   const navigate = useNavigate();
 
   const applyFilter = ()=>{
     if(speciality){
-      setFilterDoc(doctors.filter(doc => doc.speciality === speciality))
+      setFilterDoc(doctorsList.filter(doc => doc.speciality === speciality))
     }
     else{
-      setFilterDoc(doctors);
+      setFilterDoc(doctorsList);
     }
   }
 
   useEffect(()=>{
     applyFilter()
-  },[doctors,speciality])
+  },[doctorsList,speciality])
   
   return (
     <div className=''>

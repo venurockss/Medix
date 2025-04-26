@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { use, useContext, useState,useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AppContext } from '../../../frontend/src/context/Appcontext';
 import { AdminContext } from '../context/Admincontext';
+import { useNavigate } from 'react-router-dom'; // Corrected import for useNavigate
 
 const Login = () => {
     const [mode, setMode] = useState('Login'); // 'Login' or 'Sign Up'
@@ -11,6 +12,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { backendUrl, atoken, setAToken } = useContext(AdminContext);
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +26,7 @@ const Login = () => {
             } else if (userType === 'Admin') {
                 endpoint = mode === 'Sign Up' ? '/api/admin/signup' : '/api/admin/login';
             } else if (userType === 'User') {
-                endpoint = mode === 'Sign Up' ? '/api/user/register' : '/api/user/login';
+                endpoint = mode === 'Sign Up' ? '/api/users/register' : '/api/users/login';
             }
     
             // Prepare the payload
@@ -39,11 +41,17 @@ const Login = () => {
                 toast.success(data.message);
     
                 // Save token to localStorage and context
-                localStorage.setItem('token', data.atoken);
-                setAToken(data.token);
-    
-                // Optionally, redirect user after login
-                // navigate('/dashboard');  // Uncomment if you're using React Router
+                console.log('Backend response:', data); // Debugging log for backend response
+                if (data.token) {
+                    console.log('Token received:', data.token); // Debugging log for token
+                    localStorage.setItem('aToken', data.token); // Store token in localStorage
+                    setAToken(data.token); // Update context with token
+                } else {
+                    console.error('No token received from backend');
+                }
+
+                // Redirect to home page after successful login
+                navigate('/');
             } else {
                 toast.error(data.message);
             }
@@ -53,6 +61,12 @@ const Login = () => {
         }
     };
     
+
+    useEffect(() => {
+        if(atoken) {
+            navigate('/');
+        }
+    }, [atoken]);
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

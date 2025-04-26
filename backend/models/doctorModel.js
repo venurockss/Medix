@@ -9,14 +9,18 @@ const doctorSchmea = new mongoose.Schema({
     degree: {type : String, required : true},
     experience: {type : String, required : true},
     about: {type : String, required : true},
-    available: {type : Boolean, required : true},
+    available: {type : Boolean},
     fee: {type : Number, required : true},
-    address: {type : Object, required : true},
+    // address: {type : Object, required : true},
+    address: {
+        line1: { type: String, required: true },
+        line2: { type: String, required: true }
+    },
     date: {type : Number, required : true},
     slots_booked: {type : Object,default:{}},
 },{minimize:false})
 
 
-const doctorModel = mongoose.models.docter || mongoose.model('docker',doctorSchmea)
+const doctorModel = mongoose.models.docter || mongoose.model('docter',doctorSchmea)
 
 export default doctorModel;
