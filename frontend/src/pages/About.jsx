@@ -25,15 +25,15 @@ const About = () => {
 
       </div>
       <div className='flex flex-col md:flex-row mb-20'>
-        <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary text-white transition-all duration-300 text-gray-800 cursor-pointer'>
+        <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary transition-all duration-300 text-gray-800 cursor-pointer'>
           <b>Effiecncy:</b>
           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi id enim totam illum esse consectetur itaque tempore, sapiente numquam ipsa dolorum modi mollitia quisquam assumenda dolor quo aliquid soluta. Temporibus.</p>
         </div>
-        <div  className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary text-white transition-all duration-300 text-gray-800 cursor-pointer'>
+        <div  className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary transition-all duration-300 text-gray-800 cursor-pointer'>
           <b>convenience:</b>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis excepturi nihil ex deleniti qui consectetur possimus, alias vitae distinctio ab eaque, sunt doloribus consequuntur repellendus nam blanditiis quos natus iure!</p>
         </div>
-        <div  className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary text-white transition-all duration-300 text-gray-800 cursor-pointer'>
+        <div  className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary  transition-all duration-300 text-gray-800 cursor-pointer'>
           <b>Personalization:</b>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem mollitia consectetur esse tempore, optio vitae debitis vel alias fugiat hic placeat perferendis rerum in recusandae doloremque voluptas. Nam, iste eum!</p>
         </div>

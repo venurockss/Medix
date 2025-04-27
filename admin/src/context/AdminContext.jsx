@@ -1,6 +1,8 @@
 import { createContext ,useState,useEffect} from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getAllAppointments } from "../../../backend/controllers/userController";
+
 
 
 export const AdminContext = createContext();
@@ -8,7 +10,6 @@ export const AdminContext = createContext();
 const AdminContextProvider =(props) => {
     const [aToken, setAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : '');
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    console.log(aToken);
     const [doctors, setDoctors] = useState([]);
     const getAllDoctors = async () => {
         try {
@@ -27,6 +28,7 @@ const AdminContextProvider =(props) => {
             toast.error("Something went wrong while fetching doctors");
         }
     };
+    
     const value = {
        aToken,setAToken,backendUrl,doctors,setDoctors,
        getAllDoctors

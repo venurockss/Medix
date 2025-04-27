@@ -14,9 +14,7 @@ const MyProfile = () => {
     }
   }, [userData]);
 
-  
 
-  console.log('Rendering MyProfile component with userData:', userData);
   if(isLoading){
     return <p className="text-center mt-10 text-gray-500">user Loading profile...</p>;
   }

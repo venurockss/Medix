@@ -23,7 +23,7 @@ const SideBar = () => {
           </NavLink>
 
           <NavLink
-            to="/all-appointmennts"
+            to="/all-appointments"
             className={({ isActive }) =>
               `flex items-center gap-3 px-6 py-3 hover:bg-blue-50 transition ${
                 isActive ? 'bg-blue-100 font-semibold border-l-4 border-blue-500' : ''

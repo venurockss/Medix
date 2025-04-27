@@ -13,5 +13,5 @@ import mongoose from "mongoose";
    })
    
    
-   const userModel = mongoose.models.user || mongoose.model('user',userSchmea)
+   const userModel = mongoose.model('user',userSchmea) 
    export default userModel;

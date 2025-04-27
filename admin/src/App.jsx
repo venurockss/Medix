@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Login from './pages/Login'
 import { ToastContainer, toast } from 'react-toastify';
 
-import { AdminContext } from './context/AdminContext';
+import { AdminContext } from './context/Admincontext';
 import Navbar from './components/Navbar';
 import SideBar from './components/SideBar';
 import { Routes,Route } from 'react-router-dom';
@@ -26,13 +26,9 @@ const App = () => {
         <Routes>
           <Route path='/' element={<></>}></Route>
           <Route path='/admin-dashboard' element={<DashBoard/>}></Route>
-          <Route path='/all-appointmennts' element={<AllAppointment/>}></Route>
+          <Route path='/all-appointments' element={<AllAppointment/>}></Route>
           <Route path='/add-Doctor' element={<AddDoctor/>}></Route>
-          <Route path='/doctor-list' element={<DoctorsList/>}></Route>
-
-
-
-          
+          <Route path='/doctor-list' element={<DoctorsList/>}></Route>        
         </Routes>
       </div>
     </div>

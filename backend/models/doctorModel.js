@@ -9,7 +9,7 @@ const doctorSchmea = new mongoose.Schema({
     degree: {type : String, required : true},
     experience: {type : String, required : true},
     about: {type : String, required : true},
-    available: {type : Boolean},
+    available: {type : Boolean,default : true},
     fee: {type : Number, required : true},
     // address: {type : Object, required : true},
     address: {
@@ -21,6 +21,6 @@ const doctorSchmea = new mongoose.Schema({
 },{minimize:false})
 
 
-const doctorModel = mongoose.models.docter || mongoose.model('docter',doctorSchmea)
+const doctorModel =  mongoose.model('docter',doctorSchmea)
 
 export default doctorModel;

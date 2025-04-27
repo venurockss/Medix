@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { v2 as cloudinary } from 'cloudinary';
 import doctorModel from '../models/doctorModel.js';
 import jwt from 'jsonwebtoken';
+import appointmentModel from '../models/appointmentModel.js';
 
 // API to add a doctor
 const addDoctor = async (req, res) => {
@@ -107,7 +108,7 @@ const adminLogin = async (req, res) => {
 const getAllDoctors = async (req, res) => {
     try{
         const doctors = await doctorModel.find({}).select("-password");
-        console.log("Database query result for doctors:", doctors);
+        
         res.status(200).json({ success: true, doctors });
     }
     catch (error) {
@@ -116,6 +117,44 @@ const getAllDoctors = async (req, res) => {
     }
 }
 
+//api to get all appointments list 
+const appointmentsAdmin = async (req, res) => {
+    try {
+        const appointments = await appointmentModel.find({});
+        console.log('Appointment Object:', appointments);
+        res.status(200).json({ success: true, appointments });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
 
 
-export { addDoctor, adminLogin, getAllDoctors };
+// api for appointment cancellation 
+const appointmentCancel = async (req, res) => {
+    try {
+        const {  appointmentId } = req.body;
+        const appointmentData = await appointmentModel.findById(appointmentId);
+        if (!appointmentData) {
+            return res.json({ sucess: false, message: "No appointment found" });
+        }
+        await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+        //remove the slot from the doctor model
+        const { docId, slotDate, slotTime } = appointmentData;
+        const doctorData = await doctorModel.findById(docId);
+        if (!doctorData) {
+            return res.json({ sucess: false, message: "No doctor found" });
+        }
+        let slots_booked = doctorData.slots_booked;
+        slots_booked[slotDate] = slots_booked[slotDate].filter((slot) => slot !== slotTime);
+        await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+        res.json({ sucess: true, message: "Appointment cancelled successfully" });
+    }
+    catch (error) {
+        console.log(error);
+        res.json({ sucess: false, message: error.message });
+    }
+}
+
+
+export { addDoctor, adminLogin, getAllDoctors ,appointmentsAdmin,appointmentCancel };

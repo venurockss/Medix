@@ -11,13 +11,14 @@ const Navbar = () => {
 
 
     const logout = () => {
+
         setToken(null);
         localStorage.removeItem('token');
       };
 
     return (
         <div className='flex item-center justify-between text-sm py-4 md-5 border-b border-b-gray-400'>
-            <img onClick={()=>navigate('/')} src={assets.logo} alt="" srcSet="" className='w-44 cursor-pointer' />
+            <img onClick={()=>navigate('/')} src={assets.razorpay_logo} alt="" srcSet="" className='w-44 cursor-pointer' />
             <ul className='hidden md:flex  gap-5 font-medium items-center'>
                 <NavLink to='/'>
                     <li className='py-1 '>Home</li>

@@ -17,7 +17,8 @@
     "react-router-dom": "^7.4.0",
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.4",
-    "toast": "^0.5.4"
+    "toast": "^0.5.4",
+    "vite-plugin-node-polyfills": "^0.23.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
