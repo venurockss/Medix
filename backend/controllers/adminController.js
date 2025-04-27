@@ -4,6 +4,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import doctorModel from '../models/doctorModel.js';
 import jwt from 'jsonwebtoken';
 import appointmentModel from '../models/appointmentModel.js';
+import userModel from '../models/userModel.js';
 
 // API to add a doctor
 const addDoctor = async (req, res) => {
@@ -156,5 +157,56 @@ const appointmentCancel = async (req, res) => {
     }
 }
 
+//aPI for dashboard statistics
+// const dashboardStatistics = async (req, res) => {
+//     try {
+//         const totalDoctors = await doctorModel.find({});
+//         const totalUsers = await userModel.find({});
+//         const totalAppointments = await appointmentModel.find({});
+        
+//         const doctorsData = {
+//             totalDoctors: totalDoctors.length,
+//             totalUsers: totalUsers.length,
+//             totalAppointments: totalAppointments.length,
+//             latestAppointments: totalAppointments.slice(0,5).reverse(),
 
-export { addDoctor, adminLogin, getAllDoctors ,appointmentsAdmin,appointmentCancel };
+//         }
+
+//         res.status(200).json({
+//             success: true,
+//             doctorsData,
+//             message: "Dashboard statistics fetched successfully"
+//         });
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).json({ success: false, message: error.message });
+//     }
+// }
+const dashboardStatistics = async (req, res) => {
+    try {
+        const totalDoctors = await doctorModel.find({});
+        const totalUsers = await userModel.find({});
+        const totalAppointments = await appointmentModel.find({})
+            .populate('patientId', 'name')   // populate patient name
+            .populate('doctorId', 'name');   // populate doctor name
+
+        const doctorsData = {
+            totalDoctors: totalDoctors.length,
+            totalUsers: totalUsers.length,
+            totalAppointments: totalAppointments.length,
+            latestAppointments: totalAppointments.slice(0, 5).reverse(), // latest 5
+        };
+
+        res.status(200).json({
+            success: true,
+            doctorsData,
+            message: "Dashboard statistics fetched successfully"
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+
+export { addDoctor, adminLogin, getAllDoctors ,appointmentsAdmin,appointmentCancel,dashboardStatistics}; 
