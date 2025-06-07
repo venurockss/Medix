@@ -36,6 +36,8 @@ Thumbs.db
 *.sln
 *.sw?
 
+
+
 # Vite cache
 .vite/
 **/.vite/
