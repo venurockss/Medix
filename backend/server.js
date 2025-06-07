@@ -13,14 +13,21 @@ const app = express();
 const port = process.env.PORT || 4000;
 connectDb()
 connectCLoudinary()
+const allowedOrigins = [
+    'http://localhost:5173',             // Frontend local
+    'http://localhost:5174',             // Admin local
+    'https://medix-u778.vercel.app/',  // Frontend deployed      // Admin deployed
+  ];
 
 //middlewares
 app.use(express.json())
-app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174'],  // Allow both frontend and admin frontend origins
+  
+  app.use(cors({
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'atoken'] // Include 'atoken' in allowed headers
-}));
+    allowedHeaders: ['Content-Type', 'Authorization', 'atoken'],
+    credentials: true
+  }));
   
 
 
