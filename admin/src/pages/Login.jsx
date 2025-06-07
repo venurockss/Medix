@@ -2,7 +2,7 @@ import React, { use, useContext, useState,useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AppContext } from '../../../frontend/src/context/Appcontext';
-import { AdminContext } from '../context/Admincontext';
+import { AdminContext } from '../context/AdminContext';
 import { useNavigate } from 'react-router-dom'; // Corrected import for useNavigate
 
 const Login = () => {

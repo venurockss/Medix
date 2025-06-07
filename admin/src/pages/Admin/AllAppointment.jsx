@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
-import { AdminContext } from '../../context/Admincontext';
+import { AdminContext } from '../../context/AdminContext';
 
 const AllAppointment = () => {
   const { backendUrl, aToken } = useContext(AdminContext);

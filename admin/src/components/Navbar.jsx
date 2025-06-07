@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
-import { AdminContext } from '../context/Admincontext';
+import { AdminContext } from '../context/AdminContext';
 
 const Navbar = () => {
   const { aToken, setAToken } = useContext(AdminContext);
