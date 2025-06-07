@@ -1,7 +1,7 @@
 import { createContext ,useState,useEffect} from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { getAllAppointments } from "../../../backend/controllers/userController";
+// import { getAllAppointments } from "../../../backend/controllers/userController";
 
 
 
