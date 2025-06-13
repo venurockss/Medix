@@ -1,1 +1,1 @@
-live link https://medix-9ox1.vercel.app/
+live link https://medix-u778.vercel.app/
