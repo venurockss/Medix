@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -7,6 +9,8 @@ import { AdminContext } from '../../context/AdminContext';
 const AllAppointment = () => {
   const { backendUrl, aToken } = useContext(AdminContext);
   const [appointments, setAppointments] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
   
   const fetchAppointments = async () => {
     try {
@@ -60,6 +64,11 @@ const AllAppointment = () => {
     const ageDiff = Date.now() - birthDate.getTime();
     const ageDate = new Date(ageDiff);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
+  };
+
+  const handleViewDetails = (appointment) => {
+    setSelectedAppointment(appointment);
+    setShowModal(true);
   };
 
   return (
@@ -116,7 +125,7 @@ const AllAppointment = () => {
                         Cancel
                       </button>
                     )}
-                    <button className="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-2 rounded-full">
+                    <button onClick={() => handleViewDetails(appointment)} className="bg-green-500 hover:bg-green-600 text-white text-xs px-4 py-2 rounded-full">
                       View
                     </button>
                   </td>
@@ -124,6 +133,66 @@ const AllAppointment = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Appointment Details Modal */}
+      {showModal && selectedAppointment && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl p-8 w-11/12 md:w-2/3 lg:w-1/2 relative">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">Appointment Details</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6 text-gray-700">
+              <div>
+                <p className="font-semibold">Patient Name:</p>
+                <p>{selectedAppointment.userData?.name || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Patient Email:</p>
+                <p>{selectedAppointment.userData?.email || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Patient Age:</p>
+                <p>{selectedAppointment.userData?.dob ? calculateAge(selectedAppointment.userData.dob) : 'N/A'}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Doctor Name:</p>
+                <p>{selectedAppointment.doctorData?.name || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Doctor Speciality:</p>
+                <p>{selectedAppointment.doctorData?.speciality || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Appointment Date:</p>
+                <p>{selectedAppointment.slotDate}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Appointment Time:</p>
+                <p>{selectedAppointment.slotTime}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Appointment Type:</p>
+                <p>{selectedAppointment.type || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Fees:</p>
+                <p>₹{selectedAppointment.amount}</p>
+              </div>
+              <div>
+                <p className="font-semibold">Status:</p>
+                <p className={`font-semibold ${selectedAppointment.cancelled ? 'text-red-500' : 'text-green-600'}`}>
+                  {selectedAppointment.cancelled ? 'Cancelled' : 'Ongoing'}
+                </p>
+              </div>
+              {/* Add more fields as needed */}
+            </div>
+          </div>
         </div>
       )}
     </div>

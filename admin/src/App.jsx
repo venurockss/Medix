@@ -35,20 +35,18 @@ const App = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-100">
       <SideBar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
-          <div className="container mx-auto px-6 py-8">
-            <Routes>
-              <Route path="/" element={<Navigate to="/admin-dashboard" replace />} />
-              <Route path="/admin-dashboard" element={<DashBoard />} />
-              <Route path="/all-appointments" element={<AllAppointment />} />
-              <Route path="/add-Doctor" element={<AddDoctor />} />
-              <Route path="/doctor-list" element={<DoctorsList />} />
-            </Routes>
-          </div>
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white p-8 rounded-tl-3xl shadow-lg mt-[-1px]">
+          <Routes>
+            <Route path="/" element={<Navigate to="/admin-dashboard" replace />} />
+            <Route path="/admin-dashboard" element={<DashBoard />} />
+            <Route path="/all-appointments" element={<AllAppointment />} />
+            <Route path="/add-Doctor" element={<AddDoctor />} />
+            <Route path="/doctor-list" element={<DoctorsList />} />
+          </Routes>
         </main>
       </div>
       <ToastContainer 
