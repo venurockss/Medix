@@ -1,1 +1,1 @@
-live link https://relaxed-dolphin-fb8695.netlify.app/
+live link https://medix-u778.vercel.app/
