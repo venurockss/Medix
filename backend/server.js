@@ -16,7 +16,7 @@ connectCLoudinary()
 const allowedOrigins = [
     'http://localhost:5173',             // Frontend local
     'http://localhost:5174',             // Admin local
-    'https://medix-u778.vercel.app',  // Frontend deployed      // Admin deployed
+    'https://medix-9ox1.vercel.app',  // Frontend deployed      // Admin deployed
   ];
 
 //middlewares
