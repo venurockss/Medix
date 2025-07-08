@@ -22,11 +22,24 @@ const allowedOrigins = [
 //middlewares
 app.use(express.json())
   
+  // app.use(cors({
+  //   origin: allowedOrigins,
+  //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  //   allowedHeaders: ['Content-Type', 'Authorization', 'atoken'],
+  //   credentials: true
+  // }));
+
   app.use(cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'atoken'],
-    credentials: true
   }));
   
 
