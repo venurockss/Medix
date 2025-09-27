@@ -59,7 +59,7 @@ const Navbar = () => {
             className="flex-shrink-0 cursor-pointer transform hover:scale-105 transition-all duration-200" 
             onClick={() => navigate('/')}
           >
-            <img src={assets.medix_logo} alt="MEDIX Logo" className="h-8 w-auto" />
+            <img src={assets.medix_logo} alt="MEDIX Logo" className="h-12 w-auto" />
           </div>
 
           {/* Desktop Navigation */}
